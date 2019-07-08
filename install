@@ -1,0 +1,45 @@
+apt update && apt upgrade -y
+apt install curl
+curl -o install-S4dulur https://github.com/install-S4dulur.txt
+#bin/bash
+apt install git php -y
+git clone https://github.com/dkendcode/S4dulur.git
+cat >start-S4dulur <<EOL
+#bin/bash
+cd S4dulur
+php -S 0.0.0.0:8080 
+EOL
+cat >update-S4dulur <<EOL
+#bin/bash
+mkdir ~/backup-S4dulur
+cp ~/S4dulur/include/config.php ~/backup-S4dulur/config.php
+cp -rf ~/S4dulur/voucher/. ~/backup-S4dulur/voucher/
+cp -rf ~/S4dulur/img/. ~/backup-S4dulur/img/
+rm -rf S4dulur
+git clone https://github.com/dkendcode/S4dulur.git
+cp ~/backup-S4dulur/config.php ~/S4dulur/include/config.php
+cp -rf ~/backup-S4dulur/voucher/. ~/S4dulur/voucher/
+cp -rf ~/backup-S4dulur/img/. ~/S4dulur/img/
+rm -rf ~/backup-S4dulur
+./start-S4dulur
+EOL
+cat >remove-S4dulur <<EOL
+#bin/bash
+rm -rf S4dulur
+EOL
+cat >.bashrc <<EOL	
+~/start-S4dulur	
+EOL
+chmod +x start-S4dulur
+chmod +x update-S4dulur
+chmod +x remove-S4dulur
+./start-S4dulur
+
+chmod +x install-S4dulur
+./install-S4dulur
+
+
+Command
+Start S4dulur : ./start-S4dulur﻿
+Update S4dulur : ./update-S4dulur
+Remove S4dulur : ./remove-S4dulur
